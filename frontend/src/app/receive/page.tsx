@@ -22,7 +22,7 @@ function ReceiveInner({ publicKey }: { publicKey: string }) {
   const empty = incomingEarmarks.length === 0 && incomingStreams.length === 0;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
       <div className="mb-6">
         <h1 className="h2">Receive</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--muted)' }}>
@@ -53,7 +53,7 @@ function ReceiveInner({ publicKey }: { publicKey: string }) {
                 <h2 className="h3">Streams</h2>
                 <span className="badge badge-muted">{incomingStreams.length}</span>
               </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {incomingStreams.map((s) => (
                   <StreamCard
                     key={s.id.toString()}
@@ -71,7 +71,7 @@ function ReceiveInner({ publicKey }: { publicKey: string }) {
                 <h2 className="h3">Conditional earmarks</h2>
                 <span className="badge badge-muted">{incomingEarmarks.length}</span>
               </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {incomingEarmarks.map((e) => (
                   <EarmarkCard
                     key={e.id.toString()}

@@ -46,7 +46,7 @@ function AttestInner({ publicKey }: { publicKey: string }) {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
       <div className="mb-6">
         <h1 className="h2">Attestation portal</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--muted)' }}>

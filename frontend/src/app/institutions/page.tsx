@@ -2,6 +2,7 @@
 import { BadgeCheck, Building2 } from 'lucide-react';
 import { useInstitutions } from '@/hooks/useInstitutions';
 import { CATEGORY_META } from '@/types';
+import { CategoryIcon } from '@/components/ui/CategoryIcon';
 import { truncateAddress } from '@/lib/stellar';
 import { EXPLORER } from '@/lib/constants';
 
@@ -9,7 +10,7 @@ export default function InstitutionsPage() {
   const { institutions, isLoading } = useInstitutions();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
       <div className="mb-7">
         <h1 className="h2">Verified institutions</h1>
         <p className="text-sm mt-1 max-w-2xl" style={{ color: 'var(--muted)' }}>
@@ -20,7 +21,7 @@ export default function InstitutionsPage() {
       </div>
 
       {isLoading ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {[0, 1, 2].map((i) => (
             <div key={i} className="card" style={{ padding: '22px', height: '150px', opacity: 0.4 }} />
           ))}
@@ -36,18 +37,13 @@ export default function InstitutionsPage() {
           </p>
         </div>
       ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {institutions.map((i) => {
             const meta = CATEGORY_META[i.category];
             return (
-              <div key={i.id.toString()} className="card card-hover" style={{ padding: '22px' }}>
-                <div className="flex items-start justify-between mb-4">
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center text-xl"
-                    style={{ background: `${meta.color}16` }}
-                  >
-                    {meta.emoji}
-                  </div>
+              <div key={i.id.toString()} className="card card-hover" style={{ padding: '26px' }}>
+                <div className="flex items-start justify-between mb-5">
+                  <CategoryIcon category={i.category} size={52} />
                   {i.verified ? (
                     <span className="badge badge-teal"><BadgeCheck className="w-3 h-3" /> Verified</span>
                   ) : (

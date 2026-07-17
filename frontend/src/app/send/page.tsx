@@ -25,7 +25,7 @@ function SendInner({ publicKey }: { publicKey: string }) {
   const empty = activeEarmarks.length === 0 && activeStreams.length === 0;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="h2">Send</h1>
@@ -48,7 +48,7 @@ function SendInner({ publicKey }: { publicKey: string }) {
         <div className="space-y-8">
           {activeStreams.length > 0 && (
             <Section title="Streams" count={activeStreams.length}>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {activeStreams.map((s) => (
                   <StreamCard
                     key={s.id.toString()}
@@ -64,7 +64,7 @@ function SendInner({ publicKey }: { publicKey: string }) {
           )}
           {activeEarmarks.length > 0 && (
             <Section title="Conditional & direct-to-purpose" count={activeEarmarks.length}>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {activeEarmarks.map((e) => (
                   <EarmarkCard
                     key={e.id.toString()}

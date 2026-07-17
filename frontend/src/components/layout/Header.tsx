@@ -22,18 +22,18 @@ export function Header() {
       style={{ background: 'rgba(7,11,18,0.85)', backdropFilter: 'blur(18px)', borderBottom: '1px solid var(--liner)' }}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <div
-              className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+              className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
               style={{ background: 'linear-gradient(135deg, var(--teal), var(--sky))' }}
             >
-              <span style={{ color: '#04231d', fontWeight: 800, fontFamily: "'Sora',sans-serif" }}>E</span>
+              <span style={{ color: '#04231d', fontWeight: 800, fontFamily: "'Sora',sans-serif", fontSize: '18px' }}>E</span>
             </div>
             <span
               className="font-display tracking-tight"
-              style={{ fontFamily: "'Sora',sans-serif", fontWeight: 800, fontSize: '17px', letterSpacing: '-0.5px' }}
+              style={{ fontFamily: "'Sora',sans-serif", fontWeight: 800, fontSize: '20px', letterSpacing: '-0.5px' }}
             >
               Ear<span style={{ color: 'var(--teal)' }}>mark</span>
             </span>
@@ -47,9 +47,9 @@ export function Header() {
                 <Link
                   key={href}
                   href={href}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl transition-colors"
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-colors"
                   style={{
-                    fontSize: '13px',
+                    fontSize: '14.5px',
                     fontWeight: active ? 700 : 600,
                     fontFamily: "'Sora',sans-serif",
                     color: active ? 'var(--teal)' : 'var(--muted)',

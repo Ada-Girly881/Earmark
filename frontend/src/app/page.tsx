@@ -123,7 +123,7 @@ export default function Landing() {
           <h2 className="h2 mb-3">How it works</h2>
           <p className="text-sm" style={{ color: 'var(--muted)' }}>From lump sum to last mile, on-chain.</p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {STEPS.map(({ icon: Icon, title, desc }, i) => (
             <motion.div
               key={title}
