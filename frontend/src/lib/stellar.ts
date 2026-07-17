@@ -36,19 +36,43 @@ export function getServer(): SorobanRpc.Server {
 
 // ── Wallet ──────────────────────────────────────────────────────────────────
 
-export async function connectFreighter(): Promise<{ publicKey: string; network: string }> {
-  let installed = false;
+async function freighterPresent(): Promise<boolean> {
   try {
     const r = await isConnected();
-    installed = !!r.isConnected;
+    return !!r?.isConnected;
   } catch {
-    installed = false;
+    return false;
+  }
+}
+
+function withTimeout<T>(p: Promise<T>, ms: number, message: string): Promise<T> {
+  return Promise.race([
+    p,
+    new Promise<T>((_, reject) => setTimeout(() => reject(new Error(message)), ms)),
+  ]);
+}
+
+export async function connectFreighter(): Promise<{ publicKey: string; network: string }> {
+  if (typeof window === 'undefined') throw new Error('FREIGHTER_NOT_INSTALLED');
+
+  // `isConnected()` posts a window message with a 2s internal timeout, so a cold
+  // content script can false-negative on the first call. Retry once before giving up.
+  let installed = await freighterPresent();
+  if (!installed) {
+    await sleep(500);
+    installed = await freighterPresent();
   }
   if (!installed) throw new Error('FREIGHTER_NOT_INSTALLED');
 
-  const access = await requestAccess();
+  // Prompt for access — shows the "allow site" / unlock popup. Guard against a hang
+  // if the extension is unresponsive.
+  const access = await withTimeout(
+    requestAccess(),
+    90_000,
+    'Freighter didn’t respond. Open the extension (it may be waiting for you), then try again.'
+  );
   if (access.error || !access.address) {
-    const raw = (access.error ?? '').toLowerCase();
+    const raw = (access.error ?? '').toString().toLowerCase();
     if (raw.includes('reject') || raw.includes('denied') || raw.includes('cancel')) {
       throw new Error('Connection cancelled. Approve Earmark in the Freighter popup and try again.');
     }
@@ -56,13 +80,15 @@ export async function connectFreighter(): Promise<{ publicKey: string; network: 
       throw new Error('Freighter is locked. Open the extension, enter your password, then try again.');
     }
     throw new Error(
-      access.error ? `Freighter: ${access.error}` : 'Freighter did not return an address. Unlock it and retry.'
+      access.error
+        ? `Freighter: ${access.error}`
+        : 'Freighter didn’t return an address. Open and unlock the extension, then try again.'
     );
   }
 
   const net = await getNetworkDetails();
-  if (net.error) {
-    throw new Error('Could not read network from Freighter. Switch it to Testnet and try again.');
+  if (net.error || !net.networkPassphrase) {
+    throw new Error('Could not read the network from Freighter. Switch it to Testnet and try again.');
   }
   return { publicKey: access.address, network: net.networkPassphrase };
 }
